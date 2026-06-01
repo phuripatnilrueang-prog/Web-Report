@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAS Implementation Report</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #e9ecef;
+            --text-color: #333;
+            --light-text-color: #666;
+            --card-background: #ffffff;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { margin-bottom: 0.5rem; }
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        h3 { color: #444; margin-top: 1.5rem; }
+        ul { margin-bottom: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+        
+        /* Information Boxes */
+        .info-box, .alert-box, .highlight-box {
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .info-box {
+            background-color: #eaf4ff;
+            border-left: 4px solid var(--primary-color);
+        }
+        .alert-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+        .tech-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        /* KPI Grid Styling */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .kpi-card {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .kpi-card h4 { margin: 0 0 10px 0; font-size: 1rem; color: #555; }
+        .metric-value { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary-color); }
+        .metric-description { display: block; font-size: 0.85rem; color: #666; margin-top: 5px; }
+
+        /* Team Contribution Grid Styling */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .team-card {
+            background-color: #fafafa;
+            border-top: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .team-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+        .team-card ul {
+            padding-left: 1.2rem;
+            font-size: 0.95rem;
+        }
+        .team-member-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.2rem;
+        }
+        .team-member-role {
+            font-size: 1.05rem;
+            color: #555;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            background-color: var(--card-background);
+            border-top: 1px solid var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Terminal Automation System (TAS)</h1> 
+    <p>Engineering Implementation & Architecture Report</p>
+</header>
+
+<div class="container">
+    
+    <h2>1. Executive Summary</h2>
+    <p>This report documents the design and execution of the Terminal Automation System (TAS). The project successfully bridges Operational Technology (OT) and Information Technology (IT) to manage fuel distribution logistics. The implementation was executed across conceptual design, engineering execution, and intelligent data automation phases, incorporating a robust Cloud-native backend, MES-to-ERP pricing synchronization, and an advanced Digital Twin environment.</p> 
+
+    <h2>2. System Architecture & Data Pipeline Matrix</h2>
+    <p>The TAS employs a robust 5-layer architecture, meticulously designed to ensure secure, efficient, and scalable management of fuel distribution logistics. This architecture strictly separates control networks from enterprise applications.</p>
+    
+    <div style="text-align: center; margin: 2rem 0;">
+        <img src="system-architecture.png" alt="6-Layer System Architecture Diagram" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <br>
+        <small style="color: #666; display: block; margin-top: 10px;">Figure 1: Illustrating data flow from Edge Devices through DMZ to Cloud & Enterprise Layers</small>
+    </div>
+
+    <ul>
+        <li><strong>Layer 1 (The Edge & OT):</strong> Driven by a WAGO PFC200 Master PLC and 6 AccuLoad IV controllers, mapping telemetry from 8 load sensors, 9 barcode scanners, and multiple tank transmitters.</li>
+        <li><strong>Layer 2 & 3 (DMZ & Integration):</strong> Data routes from edge devices via OPC UA/MQTT through a secure DMZ containing a Kepware Server and an OPC UA Server, passing securely through firewalls into the Azure IoT Hub.</li>
+    </ul>
+
+    <div class="tech-box">
+        <h3>Cloud-Native Implementation (Layer 4 & 5)</h3>
+        <p>The system's backbone is entirely <strong>Cloud-Based</strong>, utilizing the Microsoft Azure ecosystem to ensure high availability, disaster recovery, and scalable compute. Unstructured JSON telemetry from the Edge lands in a <strong>Bronze Data Lake</strong>. Serverless orchestration via <strong>Azure Data Factory</strong> acts as the ETL engine, cleaning and transforming this data before committing it to a highly structured <strong>Silver/Gold Azure SQL Data Warehouse</strong>. This cloud-first approach ensures that historical data storage and complex Power BI analytical queries do not bottleneck the physical field operations.</p>
+    </div>
+
+    <div class="tech-box" style="border-left-color: #17a2b8;">
+        <h3>Digital Twin & Semantic Knowledge Base (Layer 6)</h3>
+        <p>Beyond standard dashboards, the architecture incorporates an operational <strong>Digital Twin</strong> powered by Large Language Models (LLMs) and a <strong>Vector Database</strong>. Technical manuals, fault codes, and historical troubleshooting data are vectorized. This allows plant engineers to use semantic search to "chat" with the facility's documentation, instantly retrieving context for alarms or maintenance procedures, dramatically reducing Mean Time to Repair (MTTR).</p>
+    </div>
+
+    <h2>3. Operational Flow & Step Logic (S1 to S5)</h2>
+    <p>The physical terminal operations adhere to a highly structured, state-machine-driven sequence, ensuring safety, precision, and compliance throughout the fuel distribution process.</p>
+
+    <div style="text-align: center; margin: 2rem 0;">
+        <img src="operational-flow.png" alt="TAS Operational Flow and SFC Logic" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <br>
+        <small style="color: #666; display: block; margin-top: 10px;">Figure 2: Functional Logic and Sequential Flow (IDEF0) for TAS Operations</small>
+    </div>
+
+    <ul>
+        <li><strong>S1 (Entrance):</strong> Driver registers at the Sales Office. A Power App matches the vehicle to a sales order and generates a unique Barcode ID.</li>
+        <li><strong>S2 (Inbound Weighing):</strong> 4 load sensors transmit the 'tareWeight' (0 to 30,000 kg range) directly to the WAGO PLC.</li>
+        <li><strong>S3a & S3b (Filling Bays):</strong> The AccuLoad IV bypasses the WAGO PLC for direct telemetry transfer, enforcing a 200 liters/min flow rate. Pumping is hard-interlocked by a Grounding Device and Vibration Sensor.</li>
+        <li><strong>S4 (Outbound Weighing):</strong> Captures gross weight to compute net fuel volume delivered.</li>
+        <li><strong>S5 (Exit & ERP Update):</strong> Barcode is scanned, triggering the final transaction log and printing the official customer invoice.</li>
+    </ul>
+
+    <h2>4. Analytics, MES & Management Dashboards</h2>
+    
+    <div style="text-align: center; margin: 2rem 0;">
+        <img src="realtime-dashboard.png" alt="Realtime Data Interface Dashboard" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <br>
+        <small style="color: #666; display: block; margin-top: 10px;">Figure 3: Live Power BI Dashboard showing real-time tank health and active alarms</small>
+    </div>
+
+    <h3>MES to ERP Synchronization & Dynamic Pricing</h3>
+    <p>To ensure financial accuracy, the TAS tightly couples the <strong>Manufacturing Execution System (MES)</strong> at the edge with the enterprise <strong>Odoo ERP</strong>. When a truck departs, the n8n Agentic AI triggers a bidirectional API call. The actual net volume (Gross Weight minus Tare Weight) captured by the PLC is pushed to Odoo. The ERP then automatically calculates the exact invoice by cross-referencing the physical volume against the <strong>Target Sell Price</strong> versus the <strong>Actual Sell Price</strong>, ensuring that any variations in product density or temperature compensation are accounted for before the customer is billed.</p>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <h4>Average Throughput</h4>
+            <span class="metric-value">~200 L/min</span>
+            <span class="metric-description">Targeted flow rate during filling.</span>
+        </div>
+        <div class="kpi-card">
+            <h4>Total Revenue</h4>
+            <span class="metric-value">4.43 bn THB</span>
+            <span class="metric-description">YTD financial revenue generated.</span>
+        </div>
+        <div class="kpi-card">
+            <h4>Break-even Volume</h4>
+            <span class="metric-value">3.73 M Liters</span>
+            <span class="metric-description">Volume to cover fixed/variable costs.</span>
+        </div>
+        <div class="kpi-card">
+            <h4>Margin of Safety</h4>
+            <span class="metric-value">97.28%</span>
+            <span class="metric-description">Current buffer above break-even.</span>
+        </div>
+    </div>
+
+    <h2>5. Project Team & Technical Contributions</h2>
+    <p>The successful execution of the TAS required highly specialized cross-functional engineering. Below is the breakdown of responsibilities and technical deliverables by role according to our organizational structure:</p>
+
+    <div class="team-grid">
+        <div class="team-card">
+            <div class="team-member-name">Phuripat Nilrueang</div>
+            <div class="team-member-role">Project Manager & Automation Engineer (OT)</div>
+            <ul>
+                <li><strong>OT Architecture & Logic:</strong> Designed the overarching physical process models (IDEF0) and programmed the state-machine operations for the WAGO PFC200 master PLC.</li>
+                <li><strong>Edge Hardware Integration:</strong> Configured the 6 Smith Meter AccuLoad IV controllers for decentralized telemetry and mapped the full I/O database (48 field instruments).</li>
+                <li><strong>Safety Systems:</strong> Engineered the critical safety interlock logic, ensuring the 200 L/min dispensing pumps only activate upon positive validation from static grounding and vibration sensors.</li>
+            </ul>
+        </div>
+
+        <div class="team-card">
+            <div class="team-member-name">Phop Keseesang</div>
+            <div class="team-member-role">Data / Cloud Engineer (IT)</div>
+            <ul>
+                <li><strong>Cloud-Native Architecture:</strong> Architected and deployed the 5-Layer Azure Cloud data pipeline, ensuring a scalable, serverless backend using Azure Data Factory and Data Lake.</li>
+                <li><strong>Secure Middleware (DMZ):</strong> Established the De-Militarized Zone, configuring the Kepware and OPC UA Servers to securely route edge telemetry through firewalls into the Azure IoT Hub.</li>
+                <li><strong>ETL & Data Warehousing:</strong> Built automated data pipelines to transform raw JSON telemetry into structured tables within the Silver/Gold Azure SQL Data Warehouse.</li>
+            </ul>
+        </div>
+
+        <div class="team-card">
+            <div class="team-member-name">Pharun Ngamcharoen</div>
+            <div class="team-member-role">Data / Cloud Engineer (IT)</div>
+            <ul>
+                <li><strong>Frontend Application Development:</strong> Designed and developed the custom Power App for Sales Officers to effectively manage frontline TAS operations.</li>
+                <li><strong>Data Entry & Order Flow:</strong> Configured the digital operational forms for sales order matching, manual data entry, and unique barcode generation at the entrance gate.</li>
+                <li><strong>Cloud Integration:</strong> Connected the frontend Power App interfaces to the Azure cloud backend to ensure seamless real-time data flow from the sales office to the warehouse.</li>
+            </ul>
+        </div>
+
+        <div class="team-card">
+            <div class="team-member-name">Wiwan Wijitworawong</div>
+            <div class="team-member-role">Data Scientist (Analytics & Costing)</div>
+            <ul>
+                <li><strong>Financial Costing Models:</strong> Implemented Activity-Based Costing (ABC) across stations S1-S4 to ensure highly accurate overhead allocation and job costing for the facility.</li>
+                <li><strong>Managerial Dashboards:</strong> Built analytical models calculating the Margin of Safety (97.28%) and overall Contribution Margins to track business profitability.</li>
+                <li><strong>Predictive Financial Analytics:</strong> Designed the 'Scenario A' ML Sensitivity Heatmap to visualize and predict financial risks and cost implications during system downtime scenarios.</li>
+            </ul>
+        </div>
+
+        <div class="team-card">
+            <div class="team-member-name">Praravee Treepattarachayakorn</div>
+            <div class="team-member-role">Data Scientist (ERP Integration)</div>
+            <ul>
+                <li><strong>Enterprise System Management:</strong> Configured and deployed the Odoo ERP system to act as the central hub for managing core business processes and inventory transactions.</li>
+                <li><strong>MES/ERP Pricing Engine:</strong> Engineered the data logic linking physical Manufacturing Execution System (MES) metrics to Odoo for real-time transaction processing.</li>
+                <li><strong>Dynamic Validation:</strong> Synchronized Target vs. Actual Sell Prices within the ERP to ensure highly accurate customer billing based directly on physical field volume telemetry.</li>
+            </ul>
+        </div>
+
+        <div class="team-card">
+            <div class="team-member-name">Thepparux Ruxpakawong</div>
+            <div class="team-member-role">AI Engineer</div>
+            <ul>
+                <li><strong>Digital Twin Architecture:</strong> Designed the Vector Database integration, embedding technical manuals to create a semantic search engine allowing engineers to query fault codes using natural language.</li>
+                <li><strong>Agentic Automation:</strong> Implemented the n8n Agentic AI platform to act as the intelligent bridge, automating data transfers between the Azure SQL warehouse and Odoo ERP.</li>
+                <li><strong>Real-Time Alerting:</strong> Configured webhooks and messaging APIs to push critical system alerts directly to operators via the LINE application, while conducting rigorous Prompt Testing.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>6. Engineering Documentation</h2>
+    <p>For detailed technical verification, please refer to the original system architecture and data models below:</p>
+    <ul>
+        <li><a href="data-architecture.pdf" target="_blank" style="color: var(--primary-color); font-weight: bold;">View 5-Layer Azure Architecture (PDF)</a></li>
+        <li><a href="IDEF0.pdf" target="_blank" style="color: var(--primary-color); font-weight: bold;">View Full IDEF0 Process Models (PDF)</a></li>
+        <li><a href="IO-database.xlsx" target="_blank" style="color: var(--primary-color); font-weight: bold;">Download I/O Database & Instrument Mapping (Excel)</a></li>
+    </ul>
+
+</div>
+
+<footer>
+    &copy; 2026 TAS Engineering Team. Generated for Final Design Review.
+</footer>
+</body>
+</html>
