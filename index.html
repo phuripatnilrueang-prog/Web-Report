@@ -195,39 +195,57 @@
     </ul>
 
     <h2>4. Analytics, MES & Management Dashboards</h2>
-    
-    <div style="text-align: center; margin: 2rem 0;">
-        <img src="realtime-dashboard.png" alt="Realtime Data Interface Dashboard" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-        <br>
-        <small style="color: #666; display: block; margin-top: 10px;">Figure 3: Live Power BI Dashboard showing real-time tank health and active alarms</small>
+<p>The TAS utilizes highly specialized Power BI dashboards tailored for different organizational tiers, ensuring both plant operators and financial stakeholders have complete, real-time visibility into system performance.</p>
+
+<h3>Monthly Operational Dashboard</h3>
+<div style="text-align: center; margin: 2rem 0;">
+    <img src="OperationalDashboard.png" alt="Monthly Operational Dashboard" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <br>
+    <small style="color: #666; display: block; margin-top: 10px;">Figure 3: Operational Dashboard tracking throughput, equipment health, and system failure rates</small>
+</div>
+
+<h3>Monthly Managerial Dashboard</h3>
+<div style="text-align: center; margin: 2rem 0;">
+    <img src="ManagerialDashboard.png" alt="Monthly Managerial Dashboard" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <br>
+    <small style="color: #666; display: block; margin-top: 10px;">Figure 4: Managerial Dashboard tracking financial metrics, ABC overhead allocation, and ML pricing sensitivity</small>
+</div>
+
+<h3>MES to ERP Synchronization & Dynamic Pricing</h3>
+<p>To ensure financial accuracy, the TAS tightly couples the <strong>Manufacturing Execution System (MES)</strong> at the edge with the enterprise <strong>Odoo ERP</strong>. When a truck departs, the n8n Agentic AI triggers a bidirectional API call. The actual net volume (Gross Weight minus Tare Weight) captured by the PLC is pushed to Odoo. The ERP then automatically calculates the exact invoice by cross-referencing the physical volume against the <strong>Target Sell Price</strong> versus the <strong>Actual Sell Price</strong>, ensuring that any variations in product density or temperature compensation are accounted for before the customer is billed.</p>
+
+<div class="kpi-grid">
+    <div class="kpi-card">
+        <h4>Average Throughput</h4>
+        <span class="metric-value">199.96 L/min</span>
+        <span class="metric-description">Real-time flow rate across all active dispensers.</span>
     </div>
-
-    <h3>MES to ERP Synchronization & Dynamic Pricing</h3>
-    <p>To ensure financial accuracy, the TAS tightly couples the <strong>Manufacturing Execution System (MES)</strong> at the edge with the enterprise <strong>Odoo ERP</strong>. When a truck departs, the n8n Agentic AI triggers a bidirectional API call. The actual net volume (Gross Weight minus Tare Weight) captured by the PLC is pushed to Odoo. The ERP then automatically calculates the exact invoice by cross-referencing the physical volume against the <strong>Target Sell Price</strong> versus the <strong>Actual Sell Price</strong>, ensuring that any variations in product density or temperature compensation are accounted for before the customer is billed.</p>
-
-    <div class="kpi-grid">
-        <div class="kpi-card">
-            <h4>Average Throughput</h4>
-            <span class="metric-value">~200 L/min</span>
-            <span class="metric-description">Targeted flow rate during filling.</span>
-        </div>
-        <div class="kpi-card">
-            <h4>Total Revenue</h4>
-            <span class="metric-value">4.43 bn THB</span>
-            <span class="metric-description">YTD financial revenue generated.</span>
-        </div>
-        <div class="kpi-card">
-            <h4>Break-even Volume</h4>
-            <span class="metric-value">3.73 M Liters</span>
-            <span class="metric-description">Volume to cover fixed/variable costs.</span>
-        </div>
-        <div class="kpi-card">
-            <h4>Margin of Safety</h4>
-            <span class="metric-value">97.28%</span>
-            <span class="metric-description">Current buffer above break-even.</span>
-        </div>
+    <div class="kpi-card">
+        <h4>Total Revenue</h4>
+        <span class="metric-value">1.66 bn THB</span>
+        <span class="metric-description">Monthly financial revenue generated.</span>
     </div>
-
+    <div class="kpi-card">
+        <h4>Break-even Volume</h4>
+        <span class="metric-value">983.56K Litres</span>
+        <span class="metric-description">Required volume to cover fixed and variable costs.</span>
+    </div>
+    <div class="kpi-card">
+        <h4>Margin of Safety</h4>
+        <span class="metric-value">98.20%</span>
+        <span class="metric-description">Current buffer above the computed break-even point.</span>
+    </div>
+    <div class="kpi-card">
+        <h4>Error Failure Rate</h4>
+        <span class="metric-value">6.18%</span>
+        <span class="metric-description">System alarm and bay failure frequency.</span>
+    </div>
+    <div class="kpi-card">
+        <h4>Contribution Margin</h4>
+        <span class="metric-value">98.40 M THB</span>
+        <span class="metric-description">Profitability after deducting variable production costs.</span>
+    </div>
+</div>
     <h2>5. Project Team & Technical Contributions</h2>
     <p>The successful execution of the TAS required highly specialized cross-functional engineering. Below is the breakdown of responsibilities and technical deliverables by role according to our organizational structure:</p>
 
